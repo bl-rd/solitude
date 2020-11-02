@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Assets/new_tileset.tres" type="TileSet" id=1]
+[ext_resource path="res://Src/Player.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Src/Levels/Battle1.gd" type="Script" id=3]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 333.3, 31.0879 )
+
+[node name="Battle1" type="Node2D"]
+script = ExtResource( 3 )
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 50, 50 )
+cell_custom_transform = Transform2D( 50, 50, 0, 64, 0, 0 )
+format = 1
+tile_data = PoolIntArray( 5, 0, 0, 6, 0, 0, 7, 0, 0, 8, 0, 0, 9, 0, 0, 10, 0, 0, 11, 0, 0, 12, 0, 0, 13, 0, 0, 14, 0, 0, 15, 0, 0, 16, 0, 0, 17, 0, 0, 18, 0, 0, 19, 0, 0, 20, 0, 0, 65541, 0, 0, 65542, 2, 0, 65555, 4, 0, 65556, 0, 0, 131077, 0, 0, 131092, 0, 0, 196613, 0, 0, 196628, 0, 0, 262149, 0, 0, 262164, 0, 0, 327685, 0, 0, 327700, 0, 0, 393221, 0, 0, 393236, 0, 0, 458757, 0, 0, 458772, 4, 0, 458773, 0, 0, 458774, 0, 0, 458775, 0, 0, 458776, 0, 0, 458777, 0, 0, 458778, 0, 0, 458779, 0, 0, 458780, 0, 0, 458781, 0, 0, 458782, 0, 0, 458783, 0, 0, 458784, 0, 0, 524293, 0, 0, 524319, 4, 0, 524320, 0, 0, 589829, 0, 0, 589856, 0, 0, 655365, 0, 0, 655392, 0, 0, 720901, 0, 0, 720928, 0, 0, 786437, 0, 0, 786464, 0, 0, 851973, 0, 0, 852000, 0, 0, 917509, 0, 0, 917536, 0, 0, 983045, 0, 0, 983072, 0, 0, 1048581, 0, 0, 1048608, 0, 0, 1114117, 0, 0, 1114144, 0, 0, 1179653, 0, 0, 1179680, 0, 0, 1245189, 0, 0, 1245216, 0, 0, 1310725, 0, 0, 1310726, 3, 0, 1310751, 1, 0, 1310752, 0, 0, 1376261, 0, 0, 1376262, 0, 0, 1376263, 0, 0, 1376264, 0, 0, 1376265, 0, 0, 1376266, 0, 0, 1376267, 3, 0, 1376282, 1, 0, 1376283, 0, 0, 1376284, 0, 0, 1376285, 0, 0, 1376286, 0, 0, 1376287, 0, 0, 1376288, 0, 0, 1441803, 0, 0, 1441818, 0, 0, 1507339, 0, 0, 1507354, 0, 0, 1572875, 0, 0, 1572876, 0, 0, 1572877, 0, 0, 1572878, 0, 0, 1572879, 0, 0, 1572880, 0, 0, 1572881, 0, 0, 1572882, 0, 0, 1572883, 0, 0, 1572884, 0, 0, 1572885, 0, 0, 1572886, 0, 0, 1572887, 0, 0, 1572888, 0, 0, 1572889, 0, 0, 1572890, 0, 0 )
+
+[node name="Player" parent="." instance=ExtResource( 2 )]
+position = Vector2( 927.154, 1069.86 )
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2( 954.094, 1079.81 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource( 1 )
+[connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_Area2D_body_exited"]
