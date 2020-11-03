@@ -3,9 +3,6 @@ extends KinematicBody2D
 const FLOOR_NORMAL: Vector2 = Vector2.ZERO
 const SPEED: = 300.0
 
-const EXIT_TOP_PATH: = "res://Src/Levels/Battle1.tscn"
-const EXIT_RIGHT_PATH: = ""
-
 export var speed: = Global.PLAYER_SPEED
 var _velocity: = Vector2.ZERO
 var _state = STATE.IDLE
@@ -58,11 +55,3 @@ func _handle_state() -> void:
 		STATE.WALKING:
 			$Animation.play("walk")
 			_velocity = move_and_slide(_velocity)
-
-
-
-func _on_ExitTop_body_entered(body: Node) -> void:
-	if body.name != self.name:
-		return
-	
-	Global.goto_scene(EXIT_TOP_PATH)

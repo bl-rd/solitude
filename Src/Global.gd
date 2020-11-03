@@ -2,8 +2,16 @@ extends Node
 
 
 const PLAYER_SPEED: = Vector2(500.0, 500.0)
+enum PLAYER_TRANSITION_DIRECTION {
+	UP,
+	DOWN,
+	LEFT,
+	RIGHT
+}
 
 var current_scene = null
+var player_pos: = Vector2.ZERO
+var player_direction = PLAYER_TRANSITION_DIRECTION.UP
 
 
 func _ready() -> void:
@@ -39,3 +47,8 @@ func _deferred_goto_scene(path):
 
 	# Optionally, to make it compatible with the SceneTree.change_scene() API.
 	get_tree().set_current_scene(current_scene)
+
+
+func update_player_transition_pos(pos: Vector2, direction: int) -> void:
+	player_pos = pos
+	player_direction = direction
