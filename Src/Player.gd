@@ -4,10 +4,14 @@ const FLOOR_NORMAL: Vector2 = Vector2.ZERO
 const SPEED: = 300.0
 
 export var speed: = Global.PLAYER_SPEED
-export var dodge_speed: = Vector2(250, 0)
+
+export var dodge_speed: = Vector2(1000, 0)
+var dodge_direction: = Vector2.ZERO
+var dodge_started = false
+var can_dodge: = true
+
 var _velocity: = Vector2.ZERO
 var _state = STATE.IDLE
-var _can_dodge: = true
 
 enum STATE {
 	IDLE,
@@ -22,7 +26,7 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	if Input.is_action_just_pressed("move_dodge") and _can_dodge:
+	if Input.is_action_just_pressed("move_dodge") and can_dodge:
 		_switch_state(STATE.DODGE)
 	
 	_handle_state()
@@ -64,14 +68,12 @@ func _handle_state() -> void:
 				_switch_state(STATE.IDLE)
 		STATE.DODGE:
 			$Animation.play("dodge")
-			if !$DodgeTween.is_active():
-				var direction: = get_direction()
-				var dodge_vec: = direction * dodge_speed.x if direction != Vector2.ZERO else dodge_speed
-				$DodgeTween.interpolate_property(self, "position",
-					self.position, self.position + dodge_vec, 0.1,
-					Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
-				$DodgeTween.start()
-				_can_dodge = false
+			if can_dodge:
+				var dir = get_direction()
+				dodge_direction = dir * dodge_speed.x if dir != Vector2.ZERO else dodge_speed
+				$DodgeTimer.start()
+			can_dodge = false
+			_velocity = move_and_slide(dodge_direction)
 
 
 # Helper function to determine if any move button is being pressed
@@ -84,13 +86,21 @@ func is_direction_pressed() -> bool:
 
 
 # Handle what happens when the dodge tween is finished.
-# Start a timer to prevent instantaneous dodging!!
 func _on_DodgeTween_tween_all_completed() -> void:
 	_switch_state(STATE.IDLE)
 	$DodgeTimer.start()
 
 
-# Let the player dodge again
+# Stop the dodge
+# Start a timer to prevent instantaneous dodging!!
 func _on_DodgeTimer_timeout() -> void:
 	$DodgeTimer.stop()
-	_can_dodge = true
+	$DodgeReset.start()
+#	can_dodge = true
+	_switch_state(STATE.IDLE)
+
+
+# Allow the player to dodge again after some time
+func _on_DodgeReset_timeout() -> void:
+	$DodgeReset.stop()
+	can_dodge = true
