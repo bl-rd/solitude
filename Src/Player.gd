@@ -91,12 +91,6 @@ func is_direction_pressed() -> bool:
 	return d or u or r or l
 
 
-# Handle what happens when the dodge tween is finished.
-func _on_DodgeTween_tween_all_completed() -> void:
-	_switch_state(STATE.IDLE)
-	$DodgeTimer.start()
-
-
 # Stop the dodge
 # Start a timer to prevent instantaneous dodging!!
 func _on_DodgeTimer_timeout() -> void:

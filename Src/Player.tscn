@@ -74,8 +74,6 @@ animation = "dead"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 7 )
 
-[node name="DodgeTween" type="Tween" parent="."]
-
 [node name="DodgeTimer" type="Timer" parent="."]
 wait_time = 0.2
 
@@ -84,7 +82,6 @@ wait_time = 0.5
 
 [node name="DeathTimer" type="Timer" parent="."]
 one_shot = true
-[connection signal="tween_all_completed" from="DodgeTween" to="." method="_on_DodgeTween_tween_all_completed"]
 [connection signal="timeout" from="DodgeTimer" to="." method="_on_DodgeTimer_timeout"]
 [connection signal="timeout" from="DodgeReset" to="." method="_on_DodgeReset_timeout"]
 [connection signal="timeout" from="DeathTimer" to="." method="_on_DeathTimer_timeout"]
