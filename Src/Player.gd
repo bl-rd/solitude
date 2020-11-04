@@ -2,6 +2,7 @@ extends KinematicBody2D
 
 const FLOOR_NORMAL: Vector2 = Vector2.ZERO
 const SPEED: = 300.0
+const RESET_SCENE_PATH: = "res://Src/Levels/Entrance.tscn"
 
 export var speed: = Global.PLAYER_SPEED
 
@@ -16,7 +17,8 @@ var _state = STATE.IDLE
 enum STATE {
 	IDLE,
 	WALKING,
-	DODGE
+	DODGE,
+	DEAD
 }
 
 
@@ -74,6 +76,10 @@ func _handle_state() -> void:
 				$DodgeTimer.start()
 			can_dodge = false
 			_velocity = move_and_slide(dodge_direction)
+		STATE.DEAD:
+			$Animation.play("dead")
+			if $DeathTimer.is_stopped():
+				$DeathTimer.start()
 
 
 # Helper function to determine if any move button is being pressed
@@ -104,3 +110,12 @@ func _on_DodgeTimer_timeout() -> void:
 func _on_DodgeReset_timeout() -> void:
 	$DodgeReset.stop()
 	can_dodge = true
+
+
+func _on_BossOne_hit() -> void:
+	_switch_state(STATE.DEAD)
+
+
+# Reset the game loop
+func _on_DeathTimer_timeout() -> void:
+	Global.goto_scene(RESET_SCENE_PATH)

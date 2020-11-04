@@ -8,11 +8,6 @@ flags = 4
 atlas = ExtResource( 1 )
 region = Rect2( 0, 0, 40, 100 )
 
-[sub_resource type="AtlasTexture" id=2]
-flags = 4
-atlas = ExtResource( 1 )
-region = Rect2( 120, 0, 40, 100 )
-
 [sub_resource type="AtlasTexture" id=3]
 flags = 4
 atlas = ExtResource( 1 )
@@ -28,16 +23,16 @@ flags = 4
 atlas = ExtResource( 1 )
 region = Rect2( 40, 0, 40, 100 )
 
+[sub_resource type="AtlasTexture" id=2]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 120, 0, 40, 100 )
+
 [sub_resource type="SpriteFrames" id=6]
 animations = [ {
 "frames": [ SubResource( 1 ) ],
 "loop": true,
 "name": "idle",
-"speed": 5.0
-}, {
-"frames": [ SubResource( 2 ) ],
-"loop": true,
-"name": "block",
 "speed": 5.0
 }, {
 "frames": [ SubResource( 3 ) ],
@@ -54,6 +49,11 @@ animations = [ {
 "loop": true,
 "name": "attack",
 "speed": 5.0
+}, {
+"frames": [ SubResource( 2 ) ],
+"loop": true,
+"name": "dead",
+"speed": 5.0
 } ]
 
 [sub_resource type="RectangleShape2D" id=7]
@@ -69,7 +69,7 @@ __meta__ = {
 
 [node name="Animation" type="AnimatedSprite" parent="."]
 frames = SubResource( 6 )
-animation = "block"
+animation = "dead"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 7 )
@@ -81,6 +81,10 @@ wait_time = 0.2
 
 [node name="DodgeReset" type="Timer" parent="."]
 wait_time = 0.5
+
+[node name="DeathTimer" type="Timer" parent="."]
+one_shot = true
 [connection signal="tween_all_completed" from="DodgeTween" to="." method="_on_DodgeTween_tween_all_completed"]
 [connection signal="timeout" from="DodgeTimer" to="." method="_on_DodgeTimer_timeout"]
 [connection signal="timeout" from="DodgeReset" to="." method="_on_DodgeReset_timeout"]
+[connection signal="timeout" from="DeathTimer" to="." method="_on_DeathTimer_timeout"]
