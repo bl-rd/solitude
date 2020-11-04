@@ -5,8 +5,13 @@ const EXIT_PATH: = "res://Src/Levels/Entrance.tscn"
 # flag to indicate if the player can leave the room through a door
 var can_leave: = false
 
+
 func _ready() -> void:
 	_initialise_player_location()
+
+
+func _process(delta: float) -> void:
+	$BossOne.target = $Player.position
 
 
 # Update the player position based on where they enter the room
