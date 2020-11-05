@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Src/Ship.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Src/Levels/Orbit.gd" type="Script" id=2]
+
+[node name="Orbit" type="Node2D"]
+position = Vector2( 0, -2.66968 )
+script = ExtResource( 2 )
+
+[node name="Ship" parent="." instance=ExtResource( 1 )]
+position = Vector2( 872.985, 501.899 )
+
+[node name="ResetTimer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+[connection signal="timeout" from="ResetTimer" to="." method="_on_ResetTimer_timeout"]

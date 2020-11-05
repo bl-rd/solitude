@@ -2,7 +2,7 @@ extends KinematicBody2D
 
 const FLOOR_NORMAL: Vector2 = Vector2.ZERO
 const SPEED: = 300.0
-const RESET_SCENE_PATH: = "res://Src/Levels/Entrance.tscn"
+const RESET_SCENE_PATH: = "res://Src/Levels/Orbit.tscn"
 
 export var speed: = Global.PLAYER_SPEED
 
@@ -77,6 +77,7 @@ func _handle_state() -> void:
 			can_dodge = false
 			_velocity = move_and_slide(dodge_direction)
 		STATE.DEAD:
+			can_dodge = false
 			$Animation.play("dead")
 			if $DeathTimer.is_stopped():
 				$DeathTimer.start()
@@ -95,9 +96,9 @@ func is_direction_pressed() -> bool:
 # Start a timer to prevent instantaneous dodging!!
 func _on_DodgeTimer_timeout() -> void:
 	$DodgeTimer.stop()
-	$DodgeReset.start()
-#	can_dodge = true
-	_switch_state(STATE.IDLE)
+	if _state != STATE.DEAD:
+		$DodgeReset.start()
+		_switch_state(STATE.IDLE)
 
 
 # Allow the player to dodge again after some time

@@ -16,7 +16,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Solitude"
-run/main_scene="res://Src/Levels/Entrance.tscn"
+run/main_scene="res://Src/Levels/Orbit.tscn"
 config/icon="res://icon.png"
 
 [autoload]
