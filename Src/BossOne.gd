@@ -39,7 +39,6 @@ func _handle_state():
 		STATE.ZAPPING:
 			$AnimatedSprite.play("zap")
 			if $ZapTimer.is_stopped():
-				print("Annnnnd...")
 				$ZapTimer.start()
 
 
