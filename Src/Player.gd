@@ -1,10 +1,13 @@
 extends KinematicBody2D
 
+signal strike
+
 const FLOOR_NORMAL: Vector2 = Vector2.ZERO
 const SPEED: = 300.0
 const RESET_SCENE_PATH: = "res://Src/Levels/Orbit.tscn"
 
 export var speed: = Global.PLAYER_SPEED
+export var damage_power: = 10.0
 
 export var dodge_speed: = Vector2(1000, 0)
 var dodge_direction: = Vector2.ZERO
@@ -15,6 +18,7 @@ var is_swinging: = false
 var _velocity: = Vector2.ZERO
 var _state = STATE.IDLE
 var _facing = FACING.RIGHT
+
 
 enum STATE {
 	IDLE,
@@ -153,3 +157,7 @@ func _on_AnimationPlayer_animation_finished(anim_name: String) -> void:
 		$StrikeBox/AnimationPlayer.play("reset")
 		print("finished")
 		_switch_state(STATE.IDLE)
+
+
+func _on_HitArea_body_entered(body: Node) -> void:
+	emit_signal("strike", body)

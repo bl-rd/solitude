@@ -11,7 +11,8 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	$BossOne.target = $Player.position
+	if $BossOne:
+		$BossOne.target = $Player.position
 
 
 # Update the player position based on where they enter the room
@@ -30,3 +31,15 @@ func _on_ExitBottom_body_entered(body: Node) -> void:
 	if can_leave:
 		Global.update_player_transition_pos($Player.position, Global.PLAYER_TRANSITION_DIRECTION.DOWN)
 		Global.goto_scene(EXIT_PATH)
+
+
+func _on_Player_strike(body: Node) -> void:
+	if body.name == $BossOne.name:
+		print("hit!")
+		$BossOne.handle_hit($Player.damage_power)
+
+
+func _on_BossOne_dead() -> void:
+	print("recieved dead signal")
+	# remove the boss from the scene
+	$BossOne.queue_free()

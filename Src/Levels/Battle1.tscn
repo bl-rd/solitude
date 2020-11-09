@@ -20,6 +20,7 @@ tile_data = PoolIntArray( 5, 0, 0, 6, 0, 0, 7, 0, 0, 8, 0, 0, 9, 0, 0, 10, 0, 0,
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
 position = Vector2( 927.154, 1069.86 )
+damage_power = 70.0
 
 [node name="ExitBottom" type="Area2D" parent="."]
 position = Vector2( 925.708, 1091.13 )
@@ -32,6 +33,8 @@ shape = SubResource( 1 )
 
 [node name="BossOne" parent="." instance=ExtResource( 4 )]
 position = Vector2( 1228.65, 726.97 )
+[connection signal="strike" from="Player" to="." method="_on_Player_strike"]
 [connection signal="body_entered" from="ExitBottom" to="." method="_on_ExitBottom_body_entered"]
 [connection signal="body_exited" from="ExitBottom" to="." method="_on_ExitBottom_body_exited"]
+[connection signal="dead" from="BossOne" to="." method="_on_BossOne_dead"]
 [connection signal="hit" from="BossOne" to="Player" method="_on_BossOne_hit"]
