@@ -11,17 +11,17 @@ region = Rect2( 450, 0, 150, 150 )
 [sub_resource type="AtlasTexture" id=2]
 flags = 4
 atlas = ExtResource( 1 )
-region = Rect2( 150, 0, 150, 150 )
+region = Rect2( 0, 0, 150, 150 )
 
 [sub_resource type="AtlasTexture" id=3]
 flags = 4
 atlas = ExtResource( 1 )
-region = Rect2( 0, 0, 150, 150 )
+region = Rect2( 300, 0, 150, 150 )
 
 [sub_resource type="AtlasTexture" id=4]
 flags = 4
 atlas = ExtResource( 1 )
-region = Rect2( 300, 0, 150, 150 )
+region = Rect2( 150, 0, 150, 150 )
 
 [sub_resource type="SpriteFrames" id=5]
 animations = [ {
@@ -32,17 +32,17 @@ animations = [ {
 }, {
 "frames": [ SubResource( 2 ) ],
 "loop": true,
-"name": "hit",
+"name": "walk",
 "speed": 5.0
 }, {
 "frames": [ SubResource( 3 ) ],
 "loop": true,
-"name": "walk",
+"name": "zap",
 "speed": 5.0
 }, {
 "frames": [ SubResource( 4 ) ],
 "loop": true,
-"name": "zap",
+"name": "hit",
 "speed": 5.0
 } ]
 

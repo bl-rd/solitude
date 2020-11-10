@@ -9,6 +9,7 @@ var can_leave = false
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	_initialise_player_location()
+	_initialise_game_loop_timer()
 
 
 # Update the player position based on where they enter the room
@@ -25,6 +26,12 @@ func _initialise_player_location() -> void:
 			# all other options indicate it is the first time in the room!
 			can_leave = true
 
+
+# start the gameplay loop timer
+func _initialise_game_loop_timer() -> void:
+	if GlobalScene.get_node("GameLoopTimer").is_stopped():
+		print("starting game loop timer")
+		GlobalScene.get_node("GameLoopTimer").start()
 
 # Handle when the player hits the top door hitbox
 func _on_ExitTop_body_entered(body: Node) -> void:

@@ -40,15 +40,17 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-#	print(is_swinging)
-	pass
+	if GlobalScene.loop_finished:
+		_switch_state(STATE.DEAD)
 
 func _physics_process(delta: float) -> void:
+	
 	if Input.is_action_just_pressed("move_dodge") and can_dodge:
 		_switch_state(STATE.DODGE)
 	
 	_handle_state()
 	_update_facing_direction()
+	
 
 
 func get_direction() -> Vector2:
@@ -120,7 +122,6 @@ func is_direction_pressed() -> bool:
 func _handle_swing() -> void:
 	if !is_swinging && Input.is_action_just_pressed("move_swing"):
 		is_swinging = true
-		print("swinging!!")
 		_switch_state(STATE.SWINGING)
 
 
@@ -147,6 +148,7 @@ func _on_DodgeReset_timeout() -> void:
 	can_dodge = true
 
 
+# Been hit by the boss...
 func _on_BossOne_hit() -> void:
 	_switch_state(STATE.DEAD)
 
@@ -160,7 +162,6 @@ func _on_AnimationPlayer_animation_finished(anim_name: String) -> void:
 	if anim_name.begins_with("swing_"):
 		is_swinging = false
 		$StrikeBox/AnimationPlayer.play("reset")
-		print("finished")
 		_switch_state(STATE.IDLE)
 
 
