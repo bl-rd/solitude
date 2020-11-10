@@ -42,4 +42,4 @@ func _on_Player_strike(body: Node) -> void:
 func _on_BossOne_dead() -> void:
 	print("recieved dead signal")
 	# remove the boss from the scene
-	$BossOne.queue_free()
+	# $BossOne.queue_free()

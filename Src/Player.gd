@@ -48,6 +48,7 @@ func _physics_process(delta: float) -> void:
 		_switch_state(STATE.DODGE)
 	
 	_handle_state()
+	_update_facing_direction()
 
 
 func get_direction() -> Vector2:
@@ -84,7 +85,6 @@ func _handle_state() -> void:
 			var direction: = get_direction()
 			_velocity = direction.normalized() * speed
 			_velocity = move_and_slide(_velocity)
-			_update_facing_direction(direction)
 			if !is_direction_pressed():
 				_switch_state(STATE.IDLE)
 		STATE.DODGE:
@@ -92,8 +92,10 @@ func _handle_state() -> void:
 			if can_dodge:
 				var dir = get_direction()
 				dodge_direction = dir * dodge_speed.x if dir != Vector2.ZERO else dodge_speed
+				# if the player is facing left with no input then need to inverse the x direction
+				if _facing == FACING.LEFT && dir.x == 0.0:
+					dodge_direction.x *= -1.0
 				$DodgeTimer.start()
-				_update_facing_direction(dodge_direction)
 			can_dodge = false
 			_velocity = move_and_slide(dodge_direction)
 		STATE.DEAD:
@@ -123,8 +125,11 @@ func _handle_swing() -> void:
 
 
 # Update which what the player is facing...
-func _update_facing_direction(direction: Vector2) -> void:
-	_facing = FACING.LEFT if direction.x < 0 else FACING.RIGHT
+func _update_facing_direction() -> void:
+	if Input.is_action_pressed("move_left"):
+		_facing = FACING.LEFT
+	elif Input.is_action_pressed("move_right"):
+		_facing = FACING.RIGHT
 
 
 # Stop the dodge
