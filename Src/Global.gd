@@ -12,8 +12,11 @@ var current_scene = null
 var player_pos: = Vector2.ZERO
 var player_direction = PLAYER_TRANSITION_DIRECTION.UP
 
+# has the core timer loop finished?
 var loop_finished: = false
 
+# Is the maze corridor able to be navigated?
+var maze_open: = false
 
 func _ready() -> void:
 	var root: = get_tree().get_root()
